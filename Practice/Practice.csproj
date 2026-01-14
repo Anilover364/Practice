@@ -8,8 +8,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\PracticeLibrary\PracticeLibrary\PracticeLibrary.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
-﻿using PracticeLibrary;
-using System.Data;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -267,6 +266,74 @@ namespace Practice
                 case "btmFourthTask":
                     MessageBox.Show(foughtTaskText);
                     break;
+            }
+        }
+    }
+    public class Operations
+    {
+        public static bool Compare(int value)
+        {
+            bool returned;
+            if (value < 10 || value > 99)
+            {
+                returned = false;
+            }
+            else
+            {
+                int firstDigit = value / 10;
+                int secondDigit = value % 10;
+                if (firstDigit == secondDigit)
+                    returned = true;
+                else
+                    returned = false;
+            }
+            return returned;
+
+        }
+        public static void InSquare(ref int value)
+        {
+            if (value >= 0)
+            {
+                try
+                {
+                    checked { value = value * value; }
+                }
+                catch (OverflowException)
+                { }
+            }
+        }
+        public static int PositivePairs(int[] mas)
+        {
+            int quantityPairs = 0;
+            for (int i = 0; i < mas.Length - 1; i++)
+            {
+                //if(mas[i] == 0)
+                //if (i<mas.Length)
+                if (mas[i] > 0 && mas[i + 1] > 0)
+                {
+                    quantityPairs++;
+                }
+            }
+            return quantityPairs;
+        }
+        public static void SumAndMultiply(out int sum, out int multiply, int[,] matr, int columnIndex)
+        {
+            sum = 0;
+            multiply = 1;
+
+            // Проверка на корректность columnIndex
+            if (columnIndex < 0 || columnIndex >= matr.GetLength(1))
+            {
+                multiply = 0;
+                return;
+            }
+
+            // Обходим все строки в заданном столбце
+            for (int row = 0; row < matr.GetLength(0); row++)
+            {
+                int value = matr[row, columnIndex]; // [строка, столбец]
+                sum += value;
+                multiply *= value;
             }
         }
     }
