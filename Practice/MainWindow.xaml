@@ -1,0 +1,124 @@
+﻿<Window x:Class="Practice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Practice"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Практическая работа" Height="720" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Задания">
+                <MenuItem x:Name="btmFirstTask" Header="Задание 1" Click="MenuItem_Click"/>
+                <MenuItem x:Name="btmSecondTask" Header="Задание 2" Click="MenuItem_Click"/>
+                <MenuItem x:Name="btmthirdTask" Header="Задание 3" Click="MenuItem_Click"/>
+                <MenuItem x:Name="btmFourthTask" Header="Задание 4" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Задание 1 -->
+            <Border Grid.Row="0" Grid.Column="0" Margin="5" BorderBrush="Gray" BorderThickness="2">
+                <StackPanel Margin="10">
+                    <TextBlock Text="1. Двузначное число" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Введите двузначное число:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtTwoDigitValue" Text="Введите двухзначное число" Tag="Введите двухзначное число" 
+                                Foreground="Gray" LostFocus="ShowWatermark" GotFocus="HideWatermark" Height="30" FontSize="14"/>
+                    </StackPanel>
+                    <Button x:Name="btnCheckTwoDigitValue" Content="Проверить" Click="Button_Click" Height="35" FontSize="14"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Задание 2 -->
+            <Border Grid.Row="0" Grid.Column="1" Margin="5" BorderBrush="Gray" BorderThickness="2">
+                <StackPanel Margin="10">
+                    <TextBlock Text="2. Возведение в квадрат" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Введите три числа:" Margin="0,0,0,8"/>
+                        <TextBox x:Name="txtAValue" Text="Введите число A" Tag="Введите число A" Foreground="Gray" LostFocus="ShowWatermark" GotFocus="HideWatermark" Height="30" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtBValue" Text="Введите число B" Tag="Введите число B" Foreground="Gray" LostFocus="ShowWatermark" GotFocus="HideWatermark" Height="30" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtCValue" Text="Введите число C" Tag="Введите число C" Foreground="Gray" LostFocus="ShowWatermark" GotFocus="HideWatermark" Height="30"/>
+                    </StackPanel>
+                    <Button x:Name="btnInSquareValues" Content="Возвести в квадрат" Click="Button_Click" Height="35" FontSize="14"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Задание 3 -->
+            <Border Grid.Row="1" Grid.Column="0" Margin="5" BorderBrush="Gray" BorderThickness="2">
+                <StackPanel Margin="10">
+                    <TextBlock Text="3. Положительные пары" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Массив чисел:" Margin="0,0,0,5"/>
+                        <DataGrid x:Name="dgArray" FontSize="12" CanUserResizeColumns="False" IsReadOnly="True" CanUserReorderColumns="False"
+                                 CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionUnit="CellOrRowHeader"
+                                 MaxHeight="120" BorderBrush="LightGray" BorderThickness="1"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Настройки массива:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtArrayQuantityColumns" Text="Количество колонок: 5" Tag="Количество колонок: " 
+                                MouseWheel="TextBox_MouseWheel" IsReadOnly="True" Cursor="SizeNS" Height="30" Background="WhiteSmoke"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnFillArray" Content="Заполнить" Click="Button_Click" Width="120" Height="35" Margin="0,0,10,0"/>
+                        <Button x:Name="btnFindPairs" Content="Найти пары" Click="Button_Click" Width="120" Height="35"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Задание 4 -->
+            <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="Gray" BorderThickness="2">
+                <StackPanel Margin="10">
+                    <TextBlock Text="4. Матрица и столбец K" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Матрица чисел:" Margin="0,0,0,5"/>
+                        <DataGrid x:Name="dgMatrix" FontSize="12" CanUserResizeColumns="False" IsReadOnly="True" CanUserReorderColumns="False"
+                                 CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionUnit="CellOrRowHeader"
+                                 MaxHeight="120" BorderBrush="LightGray" BorderThickness="1"/>
+                    </StackPanel>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Столбцов:" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtMatrixQuantityColumns" Text="Количество колонок: 5" Tag="Количество колонок: " 
+                                    MouseWheel="TextBox_MouseWheel" IsReadOnly="True" Cursor="SizeNS" Height="30" Background="WhiteSmoke"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Строк:" Margin="0,0,0,5"/>
+                            <TextBox x:Name="txtMatrixQuantityRows" Text="Количество строк: 5" Tag="Количество строк: " 
+                                    MouseWheel="TextBox_MouseWheel" IsReadOnly="True" Cursor="SizeNS" Height="30" Background="WhiteSmoke"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Случайный столбец K:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtRandomKColumn" Text="Случайная колонка K" Tag="Случайная колонка K = " 
+                                Foreground="Gray" IsReadOnly="True" Height="30" Background="WhiteSmoke"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="btnFillMatrix" Content="Заполнить" Click="Button_Click" Width="120" Height="35" Margin="0,0,10,0"/>
+                        <Button x:Name="btnFindSumAndMultiply" Content="Вычислить" Click="Button_Click" Width="120" Height="35"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
