@@ -94,7 +94,7 @@
             <!-- Задание 4 -->
             <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="Gray" BorderThickness="2">
                 <StackPanel Margin="10">
-                    <TextBlock Text="4. Матрица и столбец K" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <TextBlock Text="4. Матрица и колонка K" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
                     <StackPanel Margin="0,0,0,15">
                         <TextBlock Text="Матрица чисел:" Margin="0,0,0,5"/>
                         <DataGrid x:Name="dgMatrix" FontSize="12" CanUserResizeColumns="False" IsReadOnly="True" CanUserReorderColumns="False"
@@ -107,7 +107,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                            <TextBlock Text="Столбцов:" Margin="0,0,0,5"/>
+                            <TextBlock Text="Колонок:" Margin="0,0,0,5"/>
                             <TextBox x:Name="txtMatrixQuantityColumns" Text="Количество колонок: 5" Tag="Количество колонок: " 
                                     MouseWheel="TextBox_MouseWheel" IsReadOnly="True" Cursor="SizeNS" Height="30" FontSize="14" 
                                      VerticalContentAlignment="Center" HorizontalContentAlignment ="Center" Background="WhiteSmoke"/>
