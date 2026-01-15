@@ -13,12 +13,8 @@ namespace Practice
         public MainWindow()
         {
             InitializeComponent();
-
         }
-        //private bool TryParseValue() 
-        //{
 
-        //}
         int[] array;
         int[,] matrix;
         int arrayQuantityColumns = 5;
@@ -27,10 +23,12 @@ namespace Practice
         const int MINVALUE = 3;
         const int MAXVALUE = 10;
         const int STEP = 1;
+        private bool isProgrammaticTextChange = false; // Флаг для программных изменений
         string firstTaskText = "Ввести двузначное число. Определить: одинаковы ли его цифры.";
         string secondTaskText = "Ввести три целых числа. Возвести в квадрат те из них, значения которых неотрицательны.";
         string thirdTaskText = "Выяснить, имеются ли в данном массиве 2 идущих подряд положительных элемента. Подсчитать количество таких пар.";
         string foughtTaskText = "Дана матрица размера M * N и целое число K (1 < K < N). Найти сумму и произведение элементов K-го столбца данной матрицы.";
+
         private void FillArray()
         {
             Random r = new Random();
@@ -52,7 +50,9 @@ namespace Practice
 
             dt.Rows.Add(row);
             dgArray.ItemsSource = dt.DefaultView;
+            
         }
+
         private void FillMatrix()
         {
             Random r = new Random();
@@ -83,6 +83,7 @@ namespace Practice
 
             dgMatrix.ItemsSource = dt.DefaultView;
         }
+
         private void FirstTask()
         {
             if (!int.TryParse(txtTwoDigitValue.Text, out int value))
@@ -95,11 +96,13 @@ namespace Practice
                 MessageBox.Show("Введите двузначное число (10-99)");
                 return;
             }
+            txtFirstTaskOutput.Visibility = Visibility.Visible;
             if (Operations.Compare(value))
-                MessageBox.Show($"Цифры числа {value.ToString()} одинаковы");
+                txtFirstTaskOutput.Text=($"Цифры числа {value.ToString()} одинаковы");
             else
-                MessageBox.Show($"Цифры числа {value.ToString()} не одинаковы");
+                txtFirstTaskOutput.Text = ($"Цифры числа {value.ToString()} не одинаковы");
         }
+
         private void SecondTask()
         {
             var textBoxes = new List<TextBox>() { txtAValue, txtBValue, txtCValue };
@@ -109,7 +112,7 @@ namespace Practice
             {
                 if (!int.TryParse(textBox.Text, out int value))
                 {
-                    MessageBox.Show($"Введите корректное число в поле {textBox.Tag}");
+                    MessageBox.Show($"Введите корректное число в поле '{textBox.Tag}'");
                     return;
                 }
 
@@ -118,16 +121,20 @@ namespace Practice
 
                 if (originalValue != value) // Проверяем, изменилось ли значение
                 {
+                    // Устанавливаем флаг перед программным изменением
+                    isProgrammaticTextChange = true;
                     textBox.Text = value.ToString();
+                    isProgrammaticTextChange = false; // Сбрасываем флаг
                     anyChanged = true;
                 }
             }
 
             if (anyChanged)
-                MessageBox.Show("Неотрицательные числа были возведены в квадрат");
+                MessageBox.Show("Неотрицательные числа, которые не могли бы выйти за максимальный предел были возведены в квадрат");
             else
-                MessageBox.Show("Не было неотрицательных чисел для возведения в квадрат");
+                MessageBox.Show("Не было неотрицательных чисел или чисел, которые не могли бы выйти за максимальный предел");
         }
+
         private void ThirdTask()
         {
             if (array == null)
@@ -136,11 +143,13 @@ namespace Practice
                 return;
             }
             int quantityPairs = Operations.PositivePairs(array);
+            txtThirdTaskOutput.Visibility = Visibility.Visible;
             if (quantityPairs > 0)
-                MessageBox.Show($"В массиве {quantityPairs} положительных пар");
+                txtThirdTaskOutput.Text=($"В массиве {quantityPairs} положительных пар");
             else
-                MessageBox.Show($"В массиве нет положительных пар");
+                txtThirdTaskOutput.Text=($"В массиве нет положительных пар");
         }
+
         private void FourthTask()
         {
             if (matrix == null)
@@ -154,8 +163,10 @@ namespace Practice
             txtRandomKColumn.Foreground = Brushes.Black;
             int sum, multiply;
             Operations.SumAndMultiply(out sum, out multiply, matrix, k - 1);
-            MessageBox.Show($"Сумма {k}-й колонки = {sum}\r\nПроизведение {k}-й колонки = {multiply}");
+            txtFourthTaskOutput.Visibility = Visibility.Visible;
+            txtFourthTaskOutput.Text=($"Сумма {k}-й колонки = {sum}\r\nПроизведение {k}-й колонки = {multiply}");
         }
+
         private void ScrollValue(System.Windows.Input.MouseWheelEventArgs e, ref int value, int min, int max, int step)
         {
             if (e.Delta > 0)
@@ -180,13 +191,17 @@ namespace Practice
                 e.Handled = true;
             }
         }
+
         private void HideWatermark(object sender, RoutedEventArgs e)
         {
             var send = sender as TextBox;
             if (send.Text == send.Tag.ToString())
             {
+                // Устанавливаем флаг перед программным изменением
+                isProgrammaticTextChange = true;
                 send.Text = string.Empty;
                 send.Foreground = Brushes.Black;
+                isProgrammaticTextChange = false; // Сбрасываем флаг
             }
         }
 
@@ -195,8 +210,11 @@ namespace Practice
             var send = sender as TextBox;
             if (string.IsNullOrWhiteSpace(send.Text) || send.Text == send.Tag.ToString())
             {
+                // Устанавливаем флаг перед программным изменением
+                isProgrammaticTextChange = true;
                 send.Text = send.Tag.ToString();
                 send.Foreground = Brushes.Gray;
+                isProgrammaticTextChange = false; // Сбрасываем флаг
             }
             send.Text = send.Text.Trim();
         }
@@ -234,17 +252,24 @@ namespace Practice
             {
                 case "txtArrayQuantityColumns":
                     ScrollValue(e, ref arrayQuantityColumns, MINVALUE, MAXVALUE, STEP);
+                    // Устанавливаем флаг перед программным изменением
+                    isProgrammaticTextChange = true;
                     send.Text = send.Tag.ToString() + arrayQuantityColumns;
+                    isProgrammaticTextChange = false; // Сбрасываем флаг
                     break;
                 case "txtMatrixQuantityColumns":
-                  
                     ScrollValue(e, ref matrixQuantityColumns, MINVALUE, MAXVALUE, STEP);
+                    // Устанавливаем флаг перед программным изменением
+                    isProgrammaticTextChange = true;
                     send.Text = send.Tag.ToString() + matrixQuantityColumns;
+                    isProgrammaticTextChange = false; // Сбрасываем флаг
                     break;
                 case "txtMatrixQuantityRows":
-                   
                     ScrollValue(e, ref matrixQuantityRows, MINVALUE, MAXVALUE, STEP);
+                    // Устанавливаем флаг перед программным изменением
+                    isProgrammaticTextChange = true;
                     send.Text = send.Tag.ToString() + matrixQuantityRows;
+                    isProgrammaticTextChange = false; // Сбрасываем флаг
                     break;
             }
         }
@@ -252,7 +277,7 @@ namespace Practice
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             var send = sender as MenuItem;
-            switch (send.Name) 
+            switch (send.Name)
             {
                 case "btmFirstTask":
                     MessageBox.Show(firstTaskText);
@@ -268,7 +293,48 @@ namespace Practice
                     break;
             }
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Если это программное изменение - пропускаем обработку
+            if (isProgrammaticTextChange) return;
+
+            var send = sender as TextBox;
+            if (send.Tag == null) return;
+            int maxLength = 5;
+
+            // Если это водяной знак - пропускаем обработку
+            if (send.Text == send.Tag?.ToString())
+                return;
+
+            // Если текст превышает максимальную длину
+            if (send.Text.Length > maxLength)
+            {
+                // Устанавливаем флаг перед программным изменением
+                isProgrammaticTextChange = true;
+
+                try
+                {
+                    // Сохраняем позицию курсора
+                    int cursorPos = send.SelectionStart;
+
+                    // Обрезаем текст
+                    send.Text = send.Text.Substring(0, maxLength);
+
+                    // Восстанавливаем позицию курсора
+                    send.SelectionStart = Math.Min(cursorPos, maxLength);
+
+                    MessageBox.Show("Максимальное количество символов, которых можно ввести = 5");
+                }
+                finally
+                {
+                    // Всегда сбрасываем флаг, даже если произошла ошибка
+                    isProgrammaticTextChange = false;
+                }
+            }
+        }
     }
+
     public class Operations
     {
         public static bool Compare(int value)
@@ -288,8 +354,8 @@ namespace Practice
                     returned = false;
             }
             return returned;
-
         }
+
         public static void InSquare(ref int value)
         {
             if (value >= 0)
@@ -302,13 +368,15 @@ namespace Practice
                 { }
             }
         }
+
         public static int PositivePairs(int[] mas)
         {
+            if (mas == null || mas.Length < 2)
+                return 0;
+
             int quantityPairs = 0;
             for (int i = 0; i < mas.Length - 1; i++)
             {
-                //if(mas[i] == 0)
-                //if (i<mas.Length)
                 if (mas[i] > 0 && mas[i + 1] > 0)
                 {
                     quantityPairs++;
@@ -316,6 +384,7 @@ namespace Practice
             }
             return quantityPairs;
         }
+
         public static void SumAndMultiply(out int sum, out int multiply, int[,] matr, int columnIndex)
         {
             sum = 0;
@@ -331,7 +400,7 @@ namespace Practice
             // Обходим все строки в заданном столбце
             for (int row = 0; row < matr.GetLength(0); row++)
             {
-                int value = matr[row, columnIndex]; // [строка, столбец]
+                int value = matr[row, columnIndex];
                 sum += value;
                 multiply *= value;
             }
